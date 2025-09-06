@@ -1,231 +1,252 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+"use client"
 
-// Recommended products (with your provided image links)
-const recommendedProducts = [
+import { useState } from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { Separator } from "@radix-ui/react-select"
+
+import { Leaf, ArrowLeft, Minus, Plus, Trash2, ShoppingBag } from "lucide-react"
+
+// Mock cart items
+const mockCartItems = [
   {
     id: 1,
-    title: "Reusable Water Bottle",
-    category: "Drinkware",
-    price: 15.99,
-    image:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ17fUbuYmrV6s1hAk_cwwdyGT-Yj_b5UobhjW-m4nN3Fm4RczSpzCZ3YPHYp0eOIpMdHbI9GBXD2LwNRhsGBNy2lR0RePpeGnNsf5kT2P4",
-  },
-  {
-    id: 2,
-    title: "Organic Cotton Tote",
-    category: "Bags",
-    price: 12.49,
-    image:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTBoSBKcyNh-GjhFL1rF9SsHJDcJnITE5TTuxmMJAGDz-CSBTcz2UVUZLo10i9hXCgL2ugxQ4-e8DpjAnzQlZ6rMH-6hSYyvUsfsni5RZ07de-FFtQO2Hl3EKJ1u0OOZG6B2TaUwz-6vYI&usqp=CAc",
+    title: "Vintage Leather Jacket",
+    price: 85,
+    category: "Clothing",
+    image: "/vintage-leather-jacket.png",
+    seller: "EcoFashionista",
+    quantity: 1,
+    condition: "Excellent",
   },
   {
     id: 3,
-    title: "Bamboo Toothbrush",
-    category: "Personal Care",
-    price: 4.99,
-    image:
-      "http://assets.myntassets.com/v1/assets/images/2025/JANUARY/28/YpZyyUx2_5218d30703044e219c979481099524ed.jpg",
+    title: "Yoga Mat Set",
+    price: 25,
+    category: "Sports",
+    image: "/yoga-mat-set.png",
+    seller: "ZenLifestyle",
+    quantity: 1,
+    condition: "Like New",
   },
-];
+  {
+    id: 5,
+    title: "Ceramic Plant Pots",
+    price: 15,
+    category: "Home & Garden",
+    image: "/ceramic-plant-pots.png",
+    seller: "GreenThumb",
+    quantity: 2,
+    condition: "Good",
+  },
+]
 
 export default function CartPage() {
-  const [cart, setCart] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [cartItems, setCartItems] = useState(mockCartItems)
+  const [promoCode, setPromoCode] = useState("")
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-      // Example: Uncomment below to test a filled cart
-      // setCart([{ id: 4, title: "Eco-friendly Notebook", category: "Stationery", price: 9.99, quantity: 1, image: "https://via.placeholder.com/200" }]);
-    }, 500);
-  }, []);
+  const updateQuantity = (id, newQuantity) => {
+    if (newQuantity === 0) {
+      removeItem(id)
+      return
+    }
+    setCartItems(cartItems.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)))
+  }
 
-  // Cart calculations
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const taxes = subtotal * 0.08;
-  const total = subtotal + taxes;
+  const removeItem = (id) => {
+    setCartItems(cartItems.filter((item) => item.id !== id))
+  }
 
-  const handleQuantity = (id, delta) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-          : item
-      )
-    );
-  };
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const shipping = subtotal > 50 ? 0 : 5.99
+  const tax = subtotal * 0.08
+  const total = subtotal + shipping + tax
 
-  const handleRemove = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center text-gray-500">Loading...</div>;
+  const handleCheckout = () => {
+    // TODO: Implement checkout logic
+    console.log("Proceeding to checkout with items:", cartItems)
+    alert("Checkout functionality coming soon!")
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-start font-[Inter] px-4 py-8">
-      {cart.length === 0 ? (
-        <div className="w-full max-w-4xl mx-auto text-center animate-fade-in">
-          <div className="flex flex-col items-center justify-center">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png"
-              alt="Empty Cart"
-              className="w-52 h-52 mb-6 drop-shadow-lg"
-            />
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              Your Cart is Empty
-            </h1>
-            <p className="text-gray-500 mb-6">
-              Looks like you haven’t added anything yet. Start exploring and add
-              items you love!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b border-border bg-card/50 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/products" className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
+            <ArrowLeft className="h-4 w-4" />
+            Continue Shopping
+          </Link>
+          <Link href="/" className="flex items-center gap-2">
+            <Leaf className="h-8 w-8 text-primary" />
+            <h1 className="text-2xl font-bold text-foreground">EcoFinds</h1>
+          </Link>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold text-foreground mb-2">Shopping Cart</h2>
+          <p className="text-muted-foreground">
+            {cartItems.length} {cartItems.length === 1 ? "item" : "items"} in your sustainable shopping cart
+          </p>
+        </div>
+
+        {cartItems.length === 0 ? (
+          <Card className="text-center py-12">
+            <CardContent>
+              <ShoppingBag className="h-16 w-16 mx-auto mb-4 text-muted-foreground opacity-50" />
+              <h3 className="text-xl font-semibold text-foreground mb-2">Your cart is empty</h3>
+              <p className="text-muted-foreground mb-6">
+                Discover amazing pre-loved items and start your sustainable shopping journey.
+              </p>
               <Link href="/products">
-                <button className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-green-700 transition">
-                  Browse Products
-                </button>
+                <Button>Browse Products</Button>
               </Link>
-              <Link href="/sell">
-                <button className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-                  Start Selling
-                </button>
-              </Link>
-            </div>
-          </div>
-          <div className="mt-12">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-              Popular picks from EcoFinds community
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {recommendedProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-xl shadow-sm p-4 flex flex-col items-center hover:shadow-md transition"
-                >
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="w-32 h-32 mb-3 object-cover rounded-lg shadow"
-                  />
-                  <div className="font-semibold text-gray-800 text-center">
-                    {product.title}
-                  </div>
-                  <div className="text-sm text-gray-500 mb-1">
-                    {product.category}
-                  </div>
-                  <div className="text-green-600 font-bold mb-3">
-                    ${product.price.toFixed(2)}
-                  </div>
-                  <Link href="/products">
-                    <button className="bg-green-50 text-green-700 px-4 py-2 rounded hover:bg-green-100 transition text-sm">
-                      View Product
-                    </button>
-                  </Link>
-                </div>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Cart Items */}
+            <div className="lg:col-span-2 space-y-4">
+              {cartItems.map((item) => (
+                <Card key={item.id}>
+                  <CardContent className="p-4">
+                    <div className="flex gap-4">
+                      <Link href={`/products/${item.id}`} className="shrink-0">
+                        <img
+                          src={item.image || "/placeholder.svg"}
+                          alt={item.title}
+                          className="w-24 h-24 object-cover rounded-lg border hover:opacity-80 transition-opacity"
+                        />
+                      </Link>
+
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between mb-2">
+                          <div>
+                            <Link
+                              href={`/products/${item.id}`}
+                              className="font-semibold text-foreground hover:text-primary transition-colors"
+                            >
+                              {item.title}
+                            </Link>
+                            <p className="text-sm text-muted-foreground">by {item.seller}</p>
+                            <div className="flex items-center gap-2 mt-1">
+                              <Badge variant="secondary" className="text-xs">
+                                {item.category}
+                              </Badge>
+                              <Badge variant="outline" className="text-xs">
+                                {item.condition}
+                              </Badge>
+                            </div>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeItem(item.id)}
+                            className="text-muted-foreground hover:text-destructive"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              disabled={item.quantity <= 1}
+                              className="h-8 w-8 p-0"
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <span className="w-8 text-center text-sm font-medium">{item.quantity}</span>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              className="h-8 w-8 p-0"
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-semibold text-primary">${(item.price * item.quantity).toFixed(2)}</p>
+                            {item.quantity > 1 && <p className="text-xs text-muted-foreground">${item.price} each</p>}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
-          </div>
-        </div>
-      ) : (
-        <div className="w-full max-w-4xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <h1 className="text-3xl font-bold text-gray-800">
-              Your Cart{" "}
-              <span className="text-green-600 text-xl font-normal">
-                ({cart.length} items)
-              </span>
-            </h1>
-          </div>
-          <div className="grid gap-6 mb-24">
-            {cart.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-xl shadow-md p-4 flex flex-col sm:flex-row items-center hover:shadow-lg transition"
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-28 h-28 rounded-lg shadow mr-0 sm:mr-6 mb-4 sm:mb-0 object-cover"
-                />
-                <div className="flex-1 text-center sm:text-left">
-                  <div className="font-semibold text-gray-800 text-lg">
-                    {item.title}
+
+            {/* Order Summary */}
+            <div className="lg:col-span-1">
+              <Card className="sticky top-4">
+                <CardHeader>
+                  <CardTitle>Order Summary</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>Subtotal ({cartItems.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
+                      <span>${subtotal.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span>Shipping</span>
+                      <span>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span>Tax</span>
+                      <span>${tax.toFixed(2)}</span>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between font-semibold">
+                      <span>Total</span>
+                      <span className="text-primary">${total.toFixed(2)}</span>
+                    </div>
                   </div>
-                  <div className="text-sm text-gray-500 mb-1">
-                    {item.category}
+
+                  {shipping > 0 && (
+                    <div className="text-xs text-muted-foreground bg-muted/50 p-2 rounded">
+                      Add ${(50 - subtotal).toFixed(2)} more for free shipping
+                    </div>
+                  )}
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Promo Code</label>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Enter code"
+                        value={promoCode}
+                        onChange={(e) => setPromoCode(e.target.value)}
+                        className="text-sm"
+                      />
+                      <Button variant="outline" size="sm">
+                        Apply
+                      </Button>
+                    </div>
                   </div>
-                  <div className="text-green-600 font-bold mb-2">
-                    ${item.price.toFixed(2)}
+
+                  <Button onClick={handleCheckout} className="w-full" size="lg">
+                    Proceed to Checkout
+                  </Button>
+
+                  <div className="text-xs text-muted-foreground text-center">
+                    Secure checkout powered by sustainable commerce
                   </div>
-                  <div className="flex items-center justify-center sm:justify-start gap-2">
-                    <button
-                      onClick={() => handleQuantity(item.id, -1)}
-                      className="px-3 py-1 rounded border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
-                    >
-                      -
-                    </button>
-                    <span className="px-3 font-semibold">{item.quantity}</span>
-                    <button
-                      onClick={() => handleQuantity(item.id, 1)}
-                      className="px-3 py-1 rounded border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-                <button
-                  onClick={() => handleRemove(item.id)}
-                  className="mt-4 sm:mt-0 sm:ml-4 border border-red-400 text-red-500 px-4 py-2 rounded hover:bg-red-50 transition"
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
-          </div>
-          {/* Sticky Footer */}
-          <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-lg py-6 px-4 flex flex-col md:flex-row items-center justify-between z-10">
-            <div className="mb-4 md:mb-0 text-center md:text-left">
-              <div className="text-lg font-semibold text-gray-800">
-                Subtotal:{" "}
-                <span className="text-green-600">
-                  ${subtotal.toFixed(2)}
-                </span>
-              </div>
-              <div className="text-sm text-gray-500">
-                Taxes: ${taxes.toFixed(2)}
-              </div>
-              <div className="text-xl font-bold text-gray-800">
-                Total:{" "}
-                <span className="text-green-600">${total.toFixed(2)}</span>
-              </div>
-              <div className="text-xs text-gray-400 mt-2">
-                EcoFinds ensures secure transactions and sustainable shopping.
-              </div>
+                </CardContent>
+              </Card>
             </div>
-            <button className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold shadow hover:bg-green-700 transition text-lg">
-              Checkout
-            </button>
           </div>
-        </div>
-      )}
-      <style jsx>{`
-        .animate-fade-in {
-          animation: fadeIn 0.8s ease;
-        }
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
+        )}
+      </div>
     </div>
-  );
+  )
 }

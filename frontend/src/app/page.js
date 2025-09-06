@@ -1,9 +1,8 @@
-import { EcommerceIntuitiveHomePage } from "@/components/ecommerce-intuitive-home-page";
-
+import HomePage from "@/components/HomePage";
 export default function Page() {
   return (
     <main>
-      <EcommerceIntuitiveHomePage />
+      <HomePage />
     </main>
   );
 }
