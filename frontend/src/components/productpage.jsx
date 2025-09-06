@@ -44,7 +44,7 @@ export function ProductPage() {
             <div className="aspect-square bg-muted rounded-lg overflow-hidden">
               <img
                 alt="iPhone 15 Pro"
-                src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/reweb/blocks/placeholder.png"
+                src="https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/resize-w:450/N0LI60vfs1-apple-iphone-15-plus-128-gb-blue-493839327-i-1-1200wx1200h.jpeg"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -52,28 +52,28 @@ export function ProductPage() {
               <div className="aspect-square bg-muted rounded-lg overflow-hidden border-2 border-primary">
                 <img
                   alt="iPhone 15 Pro thumbnail"
-                  src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/reweb/blocks/placeholder.png"
+                  src="https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/resize-w:450/N0LI60vfs1-apple-iphone-15-plus-128-gb-blue-493839327-i-1-1200wx1200h.jpeg"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="aspect-square bg-muted rounded-lg overflow-hidden">
                 <img
                   alt="iPhone 15 Pro thumbnail"
-                  src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/reweb/blocks/placeholder.png"
+                  src="https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/resize-w:450/wlbZjQUvhq-apple-iphone-15-plus-128-gb-blue-493839327-i-3-1200wx1200h.jpeg"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="aspect-square bg-muted rounded-lg overflow-hidden">
                 <img
                   alt="iPhone 15 Pro thumbnail"
-                  src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/reweb/blocks/placeholder.png"
+                  src="https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/resize-w:450/ou5W_hhvtJ-apple-iphone-15-plus-128-gb-blue-493839327-i-2-1200wx1200h.jpeg"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="aspect-square bg-muted rounded-lg overflow-hidden">
                 <img
                   alt="iPhone 15 Pro thumbnail"
-                  src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/reweb/blocks/placeholder.png"
+                  src="https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/resize-w:450/0RHEVMZyga-apple-iphone-15-plus-128-gb-blue-493839327-i-4-1200wx1200h.jpeg"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -184,7 +184,7 @@ export function ProductPage() {
                     <Avatar className="h-12 w-12">
                       <AvatarImage
                         alt="Apple Store"
-                        src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/reweb/blocks/placeholder.png"
+                        src="https://images.stockcake.com/public/1/c/5/1c5f326a-d867-4ac6-ba64-47b3edb9f752_large/illuminated-apple-logo-stockcake.jpg"
                       />
                       <AvatarFallback>AS</AvatarFallback>
                     </Avatar>
@@ -464,7 +464,7 @@ export function ProductPage() {
                 <div className="aspect-square bg-muted rounded-lg overflow-hidden mb-3">
                   <img
                     alt="iPhone 15"
-                    src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/reweb/blocks/placeholder.png"
+                    src="https://m.media-amazon.com/images/I/516IO6TPGIL._SX679_.jpg"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                   />
                 </div>
@@ -484,7 +484,7 @@ export function ProductPage() {
                 <div className="aspect-square bg-muted rounded-lg overflow-hidden mb-3">
                   <img
                     alt="iPhone 15 Pro Max"
-                    src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/reweb/blocks/placeholder.png"
+                    src="https://m.media-amazon.com/images/I/61Jrsu9d3-L._SX679_.jpg"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                   />
                 </div>
@@ -504,7 +504,7 @@ export function ProductPage() {
                 <div className="aspect-square bg-muted rounded-lg overflow-hidden mb-3">
                   <img
                     alt="AirPods Pro"
-                    src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/reweb/blocks/placeholder.png"
+                    src="https://rukminim2.flixcart.com/image/832/832/kpinwy80/headphone/r/1/q/mwp22hn-a-apple-original-imag3qe9eqkfhmg8.jpeg?q=70&crop=false"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                   />
                 </div>
@@ -524,7 +524,7 @@ export function ProductPage() {
                 <div className="aspect-square bg-muted rounded-lg overflow-hidden mb-3">
                   <img
                     alt="MagSafe Charger"
-                    src="https://wqnmyfkavrotpmupbtou.supabase.co/storage/v1/object/public/reweb/blocks/placeholder.png"
+                    src="https://ambraneindia.com/cdn/shop/files/1_png_e803b85a-9248-4791-a28d-0d5c8a90f1d7.webp?v=1721043431&width=900"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                   />
                 </div>
