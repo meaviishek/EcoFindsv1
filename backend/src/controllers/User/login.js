@@ -90,7 +90,7 @@ export const verifyOtp = async (req, res) => {
         otpStore.delete(email); // Remove OTP after successful verification
         console.log("OTP verified successfully.");
 
-        User.verified = true
+        User.isVerified = true
         return res.status(200).json({ message: "OTP verified successfully" });
 
 
