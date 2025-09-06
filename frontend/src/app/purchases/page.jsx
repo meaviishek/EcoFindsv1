@@ -2,8 +2,8 @@
 import React from "react";
 
 const purchases = [
-  { id: 1, title: "Organic Cotton T-Shirt", price: 19.99, seller: "EcoStore", date: "2025-09-01", image: "/public/window.svg" },
-  { id: 2, title: "Reusable Water Bottle", price: 12.49, seller: "EcoStore", date: "2025-08-20", image: "/public/victory.svg" },
+  { id: 1, title: "Organic Cotton T-Shirt", price: 19.99, seller: "EcoStore", date: "2025-09-01", image: "/bottle1.jpg" },
+  { id: 2, title: "Reusable Water Bottle", price: 12.49, seller: "EcoStore", date: "2025-08-20", image: "/shirt1.jpg" },
 ];
 
 export default function Purchases() {
@@ -13,7 +13,7 @@ export default function Purchases() {
         <h1 className="text-2xl font-bold text-gray-800 mb-6">Previous Purchases</h1>
         <div className="space-y-6 mb-8">
           {purchases.map((item) => (
-            <div key={item.id} className="bg-white rounded-xl shadow-md p-4 flex items-center hover:shadow-lg transition">
+            <div key={item.id} className="bg-white rounded-xl shadow-md p-4 flex items-center gap-8 hover:shadow-lg transition">
               <img src={item.image} alt={item.title} className="w-20 h-20 rounded-lg shadow mr-4" />
               <div className="flex-1">
                 <div className="font-semibold text-gray-800 text-lg">{item.title}</div>
