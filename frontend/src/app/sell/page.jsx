@@ -4,10 +4,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Loader2 } from 'lucide-react';
+import { Loader2, X } from 'lucide-react';
 import { toast } from "sonner";
 
 // Shadcn/ui Components
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -18,12 +19,14 @@ import { Textarea } from '@/components/ui/textarea';
 // Define available categories
 const categories = ['Clothing', 'Electronics', 'Books', 'Home & Garden', 'Toys', 'Sports', 'Other'];
 
-// Define the validation schema using Zod
+// Define the validation schema using Zod, now with tags and stock
 const productFormSchema = z.object({
   title: z.string().min(3, { message: 'Title must be at least 3 characters long.' }).trim(),
   category: z.string({ required_error: 'Please select a category.' }),
   description: z.string().max(500, { message: 'Description cannot exceed 500 characters.' }).trim().optional(),
   price: z.coerce.number({ invalid_type_error: 'Price must be a number.' }).positive({ message: 'Price must be positive.' }),
+  stock: z.coerce.number({ invalid_type_error: 'Stock must be a number.' }).int({ message: "Stock must be a whole number." }).nonnegative({ message: "Stock can't be negative." }),
+  tags: z.array(z.string().min(2, { message: "Each tag must be at least 2 characters." })).optional(),
   image: z
     .instanceof(File, { message: 'Product image is required.' })
     .refine((file) => file.size < 2 * 1024 * 1024, 'Image size must be less than 2MB.')
@@ -34,6 +37,7 @@ const productFormSchema = z.object({
 export default function AddProductForm({ onFormSubmit }) {
   const [imagePreview, setImagePreview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentTag, setCurrentTag] = useState('');
 
   const form = useForm({
     resolver: zodResolver(productFormSchema),
@@ -41,6 +45,8 @@ export default function AddProductForm({ onFormSubmit }) {
       title: '',
       category: categories[0],
       description: '',
+      stock: 0,
+      tags: [],
     },
     mode: 'onChange',
   });
@@ -57,27 +63,40 @@ export default function AddProductForm({ onFormSubmit }) {
     }
   };
 
+  const addTag = () => {
+    if (currentTag.trim() !== '') {
+      const currentTags = form.getValues('tags') || [];
+      if (!currentTags.includes(currentTag.trim())) {
+        form.setValue('tags', [...currentTags, currentTag.trim()], { shouldValidate: true });
+        setCurrentTag('');
+      }
+    }
+  };
+  
+  const removeTag = (tagToRemove) => {
+    const currentTags = form.getValues('tags') || [];
+    form.setValue('tags', currentTags.filter(tag => tag !== tagToRemove), { shouldValidate: true });
+  };
+
+
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     console.log('Product submitted:', data);
 
-    // Simulate an API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
     
-    // Call the parent submit handler if it exists
     if (onFormSubmit) {
       onFormSubmit(data);
     }
 
-    // Trigger Sonner toast on success
     toast.success("Success! 🎉", {
         description: "Your product has been listed successfully.",
         duration: 5000,
     });
 
-    // Reset form and state
     form.reset();
     setImagePreview(null);
+    setCurrentTag('');
     setIsSubmitting(false);
   };
 
@@ -90,6 +109,7 @@ export default function AddProductForm({ onFormSubmit }) {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            {/* ... other fields like Title, Category, Description ... */}
             <FormField
               control={form.control}
               name="title"
@@ -128,7 +148,39 @@ export default function AddProductForm({ onFormSubmit }) {
                 </FormItem>
               )}
             />
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Price */}
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Price ($)</FormLabel>
+                    <FormControl>
+                      <Input type="number" step="0.01" placeholder="e.g., 49.99" {...field} className="border-green-600 focus:ring-green-600" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
+              {/* Stock Number */}
+              <FormField
+                control={form.control}
+                name="stock"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Stock Quantity</FormLabel>
+                    <FormControl>
+                      <Input type="number" step="1" min="0" placeholder="e.g., 50" {...field} className="border-green-600 focus:ring-green-600" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            
             <FormField
               control={form.control}
               name="description"
@@ -142,19 +194,49 @@ export default function AddProductForm({ onFormSubmit }) {
                 </FormItem>
               )}
             />
-
+            
+            {/* Tags Input */}
             <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price ($)</FormLabel>
-                  <FormControl>
-                    <Input type="number" step="0.01" placeholder="e.g., 49.99" {...field} className="border-green-600 focus:ring-green-600" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+                control={form.control}
+                name="tags"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Tags</FormLabel>
+                        <FormControl>
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <Input
+                                        placeholder="Add a tag..."
+                                        value={currentTag}
+                                        onChange={(e) => setCurrentTag(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                addTag();
+                                            }
+                                        }}
+                                        className="border-green-600 focus:ring-green-600"
+                                    />
+                                    <Button type="button" onClick={addTag} className="bg-green-600 hover:bg-green-700">Add</Button>
+                                </div>
+                                <div className="mt-2 flex flex-wrap gap-2">
+                                    {field.value?.map((tag) => (
+                                        <Badge key={tag} variant="secondary" className="bg-green-100 text-green-800 hover:bg-green-200">
+                                            {tag}
+                                            <button type="button" className="ml-2 rounded-full outline-none hover:bg-green-300" onClick={() => removeTag(tag)}>
+                                                <X className="h-3 w-3" />
+                                            </button>
+                                        </Badge>
+                                    ))}
+                                </div>
+                            </div>
+                        </FormControl>
+                         <FormDescription>
+                            Press Enter or click Add to include a tag.
+                        </FormDescription>
+                        <FormMessage />
+                    </FormItem>
+                )}
             />
 
             <FormField
