@@ -22,10 +22,17 @@ const uploadToCloudinary = (fileBuffer, folder = "EcoFind") => {
   });
 };
 
-// Create a new product
+// ==================== CREATE PRODUCT ====================
 export const createProduct = async (req, res) => {
   try {
-    const { name, description, price, stock, category } = req.body;
+    const { title, description, price, category, owner } = req.body;
+
+    if (!title || !price || !category || !owner) {
+      return res.status(400).json({
+        success: false,
+        message: "Title, price, category, and owner are required",
+      });
+    }
 
     let imageUrls = [];
     if (req.files && req.files.length > 0) {
@@ -36,11 +43,11 @@ export const createProduct = async (req, res) => {
     }
 
     const product = await Product.create({
-      name,
-      description,
+      title,
+      description: description || "",
       price,
-      stock,
       category,
+      owner,
       images: imageUrls,
     });
 
@@ -50,21 +57,22 @@ export const createProduct = async (req, res) => {
   }
 };
 
-// Get all products
+// ==================== GET ALL PRODUCTS ====================
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate("owner category", "name");
     res.status(200).json({ success: true, products });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// Get single product by ID
+// ==================== GET SINGLE PRODUCT ====================
 export const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
-    if (!product) return res.status(404).json({ success: false, message: "Product not found" });
+    const product = await Product.findById(req.params.id).populate("owner category", "name");
+    if (!product)
+      return res.status(404).json({ success: false, message: "Product not found" });
 
     res.status(200).json({ success: true, product });
   } catch (error) {
@@ -72,7 +80,7 @@ export const getProductById = async (req, res) => {
   }
 };
 
-// Update product by ID
+// ==================== UPDATE PRODUCT ====================
 export const updateProduct = async (req, res) => {
   try {
     const updates = { ...req.body };
@@ -96,7 +104,7 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-// Delete product by ID
+// ==================== DELETE PRODUCT ====================
 export const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
