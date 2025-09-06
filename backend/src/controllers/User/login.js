@@ -99,32 +99,34 @@ export const verifyOtp = async (req, res) => {
         return res.status(500).json({ message: "Internal server error" });
     }
 };
-
 export const login = async (req, res) => {
     try {
-        const { emailOrPhone, password } = req.body;
+        const { email, password } = req.body;
 
-        if (!emailOrPhone || !password) {
-            return res.status(400).json({ msg: "Phone/Email and password are required." });
+        if (!email || !password) {
+            return res.status(400).json({ message: "Phone/Email and password are required." });
         }
 
-        // Determine if the input is an email or phone number
-        const isPhone = /^[0-9]{10,}$/.test(emailOrPhone); // Check if it's a valid phone number format
-
-        // Find user by email or phone number
-        const user = await User.findOne(isPhone ? { phone: emailOrPhone } : { email: emailOrPhone });
+       
+        // Find user
+        const user = await User.findOne({ email: email});
 
         if (!user) {
             return res.status(404).json({ message: "User not found." });
         }
 
-        // Check if password is valid
+        // Validate password
         const isPassValid = await bcrypt.compare(password, user.password);
         if (!isPassValid) {
             return res.status(401).json({ message: "Invalid Password." });
         }
 
-        // Generate JWT token
+        // ✅ Check if user is verified
+        if (!user.isVerified) {
+            return res.status(403).json({ message: "Account not verified. Please verify OTP first." });
+        }
+
+        // Generate JWT
         const token = jwt.sign(
             {
                 id: user._id,
@@ -135,27 +137,27 @@ export const login = async (req, res) => {
             { expiresIn: "7d" }
         );
 
-        // User data (excluding sensitive info)
+        // Prepare safe user data
         const userData = {
             id: user._id,
-            name: user.name,
+            username: user.username,
             email: user.email,
             phone: user.phone,
-            profile_picture: user.profile_picture,
+            profile_picture: user.profilePicture || null,
             isVerified: user.isVerified
         };
 
-        // Set cookies for token and user data
+        // Set cookies
         return res
-            .cookie("i",token, {
+            .cookie("i", token, {
                 secure: true,
                 httpOnly: true,
                 sameSite: "none",
-                maxAge: 1000 * 60 * 60 * 48 // 48 hours
+                maxAge: 1000 * 60 * 60 * 48
             })
             .cookie("user", JSON.stringify(userData), {
                 secure: true,
-                httpOnly: false, // User data can be accessed by frontend
+                httpOnly: false,
                 sameSite: "none",
                 maxAge: 1000 * 60 * 60 * 48
             })
