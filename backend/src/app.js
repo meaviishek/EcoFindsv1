@@ -12,7 +12,8 @@ const app=express()
 const server =createServer(app);
 app.use(passport.initialize());
 
-app.use("/api/v0.1/products",productRoutes);
+
+
 app.use(cors({
     origin:true,
     credentials:true,
@@ -32,7 +33,7 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/api/user/",user);
-
+app.use("/api/products",productRoutes);
 
 
 export {app,server};

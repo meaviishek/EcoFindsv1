@@ -7,7 +7,7 @@ import { login } from "../../controllers/User/login.js";
 import { registerUser } from "../../controllers/User/registerUser.js";
 import { checkAuth } from "../../controllers/User/login.js";
 import { fetchuserdata } from "../../controllers/User/userdata.js";
-
+import { submitRating } from "../../controllers/User/submitRating.js";
 // import { googleLoginCallback } from "../../controllers/user/googleLogin.js";
 // import "../../config/passport.js";
 
@@ -39,6 +39,9 @@ router.post("/logout",logout);
 // router.post("/send",sendMailMsg)
 // router.post("/forget-user", forgetUser);
 // router.post("/forget-password",forgetPassword)
+
+
+router.post("/submit-rating", protect, submitRating);
 
 
 export default router;
