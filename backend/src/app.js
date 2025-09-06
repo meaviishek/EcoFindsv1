@@ -3,6 +3,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import user from "./routes/user/userroutes.js"
 import { createServer } from "http";
+import productRoutes from "./routes/product/productRoutes.js";
+
 
 import passport from "passport";
 
@@ -10,6 +12,7 @@ const app=express()
 const server =createServer(app);
 app.use(passport.initialize());
 
+app.use("/api/v0.1/products",productRoutes);
 app.use(cors({
     origin:true,
     credentials:true,
