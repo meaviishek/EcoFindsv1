@@ -324,81 +324,84 @@ export function ProductPage() {
             </Card>
           </TabsContent>
           <TabsContent value="reviews" className="mt-6">
-            <Card>
-              <CardContent className="px-6">
-                <h3 className="text-xl font-heading font-semibold mb-4">Customer Reviews</h3>
-                <div className="space-y-6">
-                  <div className="border-b pb-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <div className="flex items-center space-x-2 mb-1">
-                          <span className="font-medium">Sarah Johnson</span>
-                          <Badge variant="secondary">Verified Purchase</Badge>
-                        </div>
-                        <div className="flex">
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                        </div>
-                      </div>
-                      <span className="text-sm text-muted-foreground">2 days ago</span>
-                    </div>
-                    <p className="text-sm">
-                      Amazing phone! The camera quality is outstanding and the titanium build feels
-                      premium. Battery life easily gets me through the day with heavy usage.
-                    </p>
-                  </div>
-                  <div className="border-b pb-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <div className="flex items-center space-x-2 mb-1">
-                          <span className="font-medium">Mike Chen</span>
-                          <Badge variant="secondary">Verified Purchase</Badge>
-                        </div>
-                        <div className="flex">
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 text-muted-foreground" />
-                        </div>
-                      </div>
-                      <span className="text-sm text-muted-foreground">1 week ago</span>
-                    </div>
-                    <p className="text-sm">
-                      Great upgrade from my iPhone 13. The A17 Pro chip is incredibly fast and the
-                      Action button is more useful than I expected. Only minor complaint is the
-                      price.
-                    </p>
-                  </div>
-                  <div>
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <div className="flex items-center space-x-2 mb-1">
-                          <span className="font-medium">Emily Rodriguez</span>
-                          <Badge variant="secondary">Verified Purchase</Badge>
-                        </div>
-                        <div className="flex">
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                          <Icon icon="lucide:star" className="h-4 w-4 fill-primary text-primary" />
-                        </div>
-                      </div>
-                      <span className="text-sm text-muted-foreground">2 weeks ago</span>
-                    </div>
-                    <p className="text-sm">
-                      Perfect phone for photography enthusiasts. The Pro camera system captures
-                      incredible detail and the new portrait mode is fantastic. Highly recommend!
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+  <Card>
+    <CardContent className="px-6">
+      <h3 className="text-xl font-heading font-semibold mb-4">Customer Reviews</h3>
+      <div className="space-y-6">
+        
+        {/* --- Review 1: Sarah (5 stars) --- */}
+        <div className="border-b pb-6">
+          <div className="flex items-start justify-between mb-3">
+            <div>
+              <div className="flex items-center space-x-2 mb-1">
+                <span className="font-medium">Sarah Johnson</span>
+                <Badge variant="secondary">Verified Purchase</Badge>
+              </div>
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <Icon key={i} icon="lucide:star" className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+            </div>
+            <span className="text-sm text-muted-foreground">2 days ago</span>
+          </div>
+          <p className="text-sm">
+            Amazing phone! The camera quality is outstanding and the titanium build feels
+            premium. Battery life easily gets me through the day with heavy usage.
+          </p>
+        </div>
+
+        {/* --- Review 2: Mike (5 stars) --- */}
+        <div className="border-b pb-6">
+          <div className="flex items-start justify-between mb-3">
+            <div>
+              <div className="flex items-center space-x-2 mb-1">
+                <span className="font-medium">Mike Chen</span>
+                <Badge variant="secondary">Verified Purchase</Badge>
+              </div>
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <Icon key={i} icon="lucide:star" className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+            </div>
+            <span className="text-sm text-muted-foreground">1 week ago</span>
+          </div>
+          <p className="text-sm">
+            Great upgrade from my iPhone 13. The A17 Pro chip is incredibly fast and the
+            Action button is more useful than I expected. Only minor complaint is the
+            price.
+          </p>
+        </div>
+
+        {/* --- Review 3: Emily (4 stars) --- */}
+        <div>
+          <div className="flex items-start justify-between mb-3">
+            <div>
+              <div className="flex items-center space-x-2 mb-1">
+                <span className="font-medium">Emily Rodriguez</span>
+                <Badge variant="secondary">Verified Purchase</Badge>
+              </div>
+              <div className="flex">
+                {[...Array(4)].map((_, i) => (
+                  <Icon key={i} icon="lucide:star" className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                ))}
+                <Icon icon="lucide:star" className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </div>
+            <span className="text-sm text-muted-foreground">2 weeks ago</span>
+          </div>
+          <p className="text-sm">
+            Perfect phone for photography enthusiasts. The Pro camera system captures
+            incredible detail and the new portrait mode is fantastic. Highly recommend!
+          </p>
+        </div>
+
+      </div>
+    </CardContent>
+  </Card>
+</TabsContent>
+
           <TabsContent value="shipping" className="mt-6">
             <Card>
               <CardContent className="px-6">
