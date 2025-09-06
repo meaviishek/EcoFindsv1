@@ -1,11 +1,15 @@
 import express from "express"
 ;import { protect } from "../../middleware/authMiddleware.js"
+import { generateOtp } from "../../controllers/User/login.js";
+import { verifyOtp } from "../../controllers/User/login.js";
+import { logout } from "../../controllers/User/login.js";
+import { login } from "../../controllers/User/login.js";
+import { registerUser } from "../../controllers/User/registerUser.js";
+import { checkAuth } from "../../controllers/User/login.js";
+import { fetchuserdata } from "../../controllers/User/userdata.js";
 
-;import { fetchuserdata } from "../../controllers/user/userdata.js"
-;import { logout } from "../../controllers/user/logOut.js"
-import passport from "passport";
 // import { googleLoginCallback } from "../../controllers/user/googleLogin.js";
-import "../../config/passport.js";
+// import "../../config/passport.js";
 
 const router=express.Router();
 
@@ -27,8 +31,8 @@ router.get("/check-auth",checkAuth)
 //   );
 
 
-// router.post("/generate-otp",generateOtp);
-// router.post("/verify-otp",verifyOtp);
+router.post("/generate-otp",generateOtp);
+router.post("/verify-otp",verifyOtp);
 
 // ✅ Lout User
 router.post("/logout",logout);

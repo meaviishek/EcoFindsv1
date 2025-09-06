@@ -15,4 +15,5 @@ const ProductSchema = new mongoose.Schema({
 
 ProductSchema.index({ title: 'text', description: 'text' }); // text index for keyword search
 
-module.exports = mongoose.model('Product', ProductSchema);
+const Products = mongoose.model('Product', ProductSchema);
+export default Products

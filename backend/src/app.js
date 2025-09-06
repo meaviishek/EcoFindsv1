@@ -1,7 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import user from "./routes/user/userroutes"
+import user from "./routes/user/userroutes.js"
 import { createServer } from "http";
 
 import passport from "passport";
@@ -28,7 +28,7 @@ app.get("/",(req,res)=>{
 
 })
 
-app.use("/api/v0.1/user/",user);
+app.use("/api/user/",user);
 
 
 

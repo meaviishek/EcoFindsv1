@@ -11,7 +11,14 @@ const UserSchema = new mongoose.Schema({
   bio: { type: String, default: '' },
   phone: { type: String, default: '' },
   // small counters/metadata
+   isVerified: {
+    type: Boolean,
+    default: false
+  },
+
   listingsCount: { type: Number, default: 0 },
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
+
+export default User
