@@ -8,7 +8,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Helper to upload image buffer to Cloudinary
+
 const uploadToCloudinary = (fileBuffer, folder = "EcoFind") => {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
@@ -22,7 +22,7 @@ const uploadToCloudinary = (fileBuffer, folder = "EcoFind") => {
   });
 };
 
-// ==================== CREATE PRODUCT ====================
+//create
 export const createProduct = async (req, res) => {
   try {
     const { title, description, price, category, owner } = req.body;
@@ -56,8 +56,7 @@ export const createProduct = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
-// ==================== GET ALL PRODUCTS ====================
+//get
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.find().populate("owner category", "name");
@@ -67,7 +66,7 @@ export const getProducts = async (req, res) => {
   }
 };
 
-// ==================== GET SINGLE PRODUCT ====================
+//byid
 export const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id).populate("owner category", "name");
@@ -80,12 +79,12 @@ export const getProductById = async (req, res) => {
   }
 };
 
-// ==================== UPDATE PRODUCT ====================
+//update
 export const updateProduct = async (req, res) => {
   try {
     const updates = { ...req.body };
 
-    // Handle new images if uploaded
+  
     if (req.files && req.files.length > 0) {
       let imageUrls = [];
       for (const file of req.files) {
@@ -104,7 +103,7 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-// ==================== DELETE PRODUCT ====================
+//delete
 export const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
