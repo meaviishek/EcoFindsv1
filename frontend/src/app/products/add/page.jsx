@@ -22,7 +22,7 @@ export default function AddProductPage() {
     price: "",
     condition: "",
   })
-  const [images, setImages] = useState<string[]>([])
+  const [images, setImages] = useState([])
 
   const handleSubmit = (e) => {
     e.preventDefault()

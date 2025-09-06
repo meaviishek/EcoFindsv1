@@ -98,7 +98,7 @@ export default function ProductsPage() {
                 Sell Item
               </Button>
             </Link>
-            <Link href="/my-listings">
+            <Link href="/products/my-listings">
               <Button variant="outline">My Listings</Button>
             </Link>
             <Link href="/browse">
