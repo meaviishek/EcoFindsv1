@@ -34,12 +34,7 @@ const Navbar = () => {
               EcoFinds
             </div>
             <nav className="hidden md:flex items-center space-x-6">
-              <Link
-                href="/browse"
-                className="text-sm font-medium hover:text-primary transition-colors"
-              >
-                Browse
-              </Link>
+             
               <Link
                 href="/products"
                 className="text-sm font-medium hover:text-primary transition-colors"

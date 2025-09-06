@@ -30,7 +30,7 @@ export default function HomePage() {
                 Start Selling Today
               </Button>
             </Link>
-            <Link href="/browse">
+            <Link href="/products">
               <Button variant="outline" size="lg" className="w-full sm:w-auto bg-transparent">
                 Browse Items
               </Button>
