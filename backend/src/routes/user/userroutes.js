@@ -15,20 +15,20 @@ router.post("/register",registerUser);
 router.get("/check-auth",checkAuth)
 
 
-router.get(
-    "/google",
-    passport.authenticate("google", { scope: ["profile", "email"] })
-  );
+// router.get(
+//     "/google",
+//     passport.authenticate("google", { scope: ["profile", "email"] })
+//   );
   
-  router.get(
-    "/google/callback",
-    passport.authenticate("google", { failureRedirect:process.env.FRONTEND_URL,session: false }),
-    googleLoginCallback
-  );
+//   router.get(
+//     "/google/callback",
+//     passport.authenticate("google", { failureRedirect:process.env.FRONTEND_URL,session: false }),
+//     googleLoginCallback
+//   );
 
 
-router.post("/generate-otp",generateOtp);
-router.post("/verify-otp",verifyOtp);
+// router.post("/generate-otp",generateOtp);
+// router.post("/verify-otp",verifyOtp);
 
 // ✅ Lout User
 router.post("/logout",logout);
