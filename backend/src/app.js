@@ -32,6 +32,8 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/api/user/",user);
+app.use("/api/orders", orderRoutes);
+app.use("/api/carts", cartRoutes);
 
 
 
