@@ -115,7 +115,7 @@ function AuthPage() {
                     </div>
                 </div>
                 <div className='hidden xl:flex justify-center items-center'>
-                    <img src="https://www.go.ooo/img/bg-img/Login.jpg" className='h-[500px] border-green-200 rounded-2xl' alt="Picture of the author" />
+                    <img src="/authbg.png" className='h-[450px] border-green-200 rounded-2xl' alt="Picture of the author" />
                 </div>
             </div>
         </div>
