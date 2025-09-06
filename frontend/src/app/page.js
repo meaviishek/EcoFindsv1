@@ -1,9 +1,9 @@
-import Image from "next/image";
+import { EcommerceIntuitiveHomePage } from "@/components/ecommerce-intuitive-home-page";
 
-export default function Home() {
+export default function Page() {
   return (
-    <div className="">
-     
-    </div>
+    <main>
+      <EcommerceIntuitiveHomePage />
+    </main>
   );
 }
