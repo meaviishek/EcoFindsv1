@@ -60,7 +60,7 @@ export const getProducts = async (req, res) => {
   }
 };
 
-// Get single product by ID
+//byid
 export const getProductById = async (req, res) => {
   try {
     const product = await Products.findById(req.params.id);
@@ -120,7 +120,7 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-// Delete product by ID
+//delete
 export const deleteProduct = async (req, res) => {
   try {
     const product = await Products.findByIdAndDelete(req.params.id);
