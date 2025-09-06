@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import Organizer from "../models/Organizer.js";
-import Admin from "../models/Admin.js";
+
 
 export const protect = async (req, res, next) => {
     const token = req.cookies?.i;
