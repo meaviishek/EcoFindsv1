@@ -3,8 +3,8 @@ import React from "react";
 import Link from "next/link";
 
 const myProducts = [
-  { id: 1, title: "Organic Cotton T-Shirt", price: 19.99, image: "/public/window.svg" },
-  { id: 2, title: "Reusable Water Bottle", price: 12.49, image: "/public/victory.svg" },
+  { id: 1, title: "Organic Cotton T-Shirt", price: 19.99, image: "/shirt1.jpg" },
+  { id: 2, title: "Reusable Water Bottle", price: 12.49, image: "/bottle1.jpg" },
 ];
 
 export default function MyListings() {
